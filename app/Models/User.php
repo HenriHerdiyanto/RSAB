@@ -20,6 +20,7 @@ class User extends Authenticatable
         'jenis_kelamin',
         'alamat',
         'no_hp',
+        'status_user',
     ];
 
     protected $hidden = [
@@ -33,5 +34,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class, 'user_menus');
     }
 }

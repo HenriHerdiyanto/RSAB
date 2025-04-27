@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Data Pasien</h1>
+    <h1>Data Dokter</h1>
     <!-- Pesan Sukses -->
     @if (session('success'))
         <div class="alert alert-success">
@@ -14,10 +14,10 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Tambah Pasien</h4>
+                    <h4 class="card-title">Tambah Dokter</h4>
                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <i class="fa fa-plus"></i>
-                        Tambah Pasien
+                        Tambah Dokter
                     </button>
                 </div>
             </div>
@@ -29,23 +29,23 @@
                             <div class="modal-header no-bd">
                                 <h5 class="modal-title">
                                     <span class="fw-mediumbold">
-                                    Tambah Pasien</span>
+                                    Tambah Dokter</span>
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('pasien.store') }}" method="POST">
+                            <form action="{{ route('dokter.store') }}" method="POST">
                                 <div class="modal-body">
-                                    <p class="small">Pastikan semua kolom terisi</p>
                                     @csrf
+                                    <p class="small">Pastikan semua kolom terisi</p>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group form-group-default">
                                                 <label>Name</label>
                                                 <input id="addName" type="text" name="name" class="form-control" placeholder="fill name">
                                                 <input id="addName" type="hidden" name="role" class="form-control" value="user">
-                                                <input id="addName" type="hidden" name="status_user" class="form-control" value="user">
+                                                <input id="addName" type="hidden" name="status_user" class="form-control" value="dokter">
                                             </div>
                                         </div>
                                         <div class="col-md-6 pr-0">
@@ -121,7 +121,7 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            @foreach ($pasien as $item)
+                            @foreach ($dokter as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
@@ -136,13 +136,13 @@
                                     <td>{{ $item->no_hp }}</td>
                                     <td>
                                         <div class="form-button-action">
-                                            <a href="{{ route('pasien.edit', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                            <a href="{{ route('dokter.edit', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{ route('users.access', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Edit Task">
+                                            <a href="{{ route('dokter.access', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Edit Task">
                                                 <i class="fas fa-clipboard-list"></i>
                                             </a>
-                                            <form action="{{ route('pasien.destroy', $item->id) }}" method="POST">
+                                            <form action="{{ route('dokter.destroy', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE') <!-- Gunakan DELETE, bukan POST -->
                                                 <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">

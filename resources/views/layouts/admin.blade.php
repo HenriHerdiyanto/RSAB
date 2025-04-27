@@ -37,7 +37,7 @@
 			<!-- Logo Header -->
 			<div class="logo-header">
 
-				<a href="index.html" class="logo">
+				<a href="{{ route('admin.dashboard') }}" class="logo">
 					<img src="{{ asset('assets/img/logoazzara.svg') }}" alt="navbar brand" class="navbar-brand">
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
@@ -159,7 +159,7 @@
 									<div class="user-box">
 										<div class="avatar-lg"><img src="{{ asset('assets/img/profile.jpg') }}" alt="..." class="avatar-img rounded-circle"></div>
 										<div class="u-text">
-											<h4>SUPERADMIN</h4>
+											<h4>{{ Auth::user()->name }}</h4>
 											<p class="text-muted">RS ANAK DAN BUNDA HARAPAN KITA</p>
                                             <form action="{{ route('logout') }}" method="post">
                                                 @csrf
@@ -190,7 +190,7 @@
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									<span class="user-level">SuperAdmin</span>
+									<span class="user-level">{{ Auth::user()->name }}</span>
 									<span class="caret"></span>
 								</span>
 							</a>
@@ -208,100 +208,158 @@
 						</div>
 					</div>
 					<ul class="nav">
-						<li class="nav-item active">
-							<a href="{{ route('admin.dashboard') }}">
-								<i class="fas fa-home"></i>
-								<p>Dashboard</p>
-								<span class="badge badge-count">5</span>
-							</a>
-						</li>
+						{{-- Cek apakah user yang login adalah admin --}}
+						@if (Auth::user()->role == 'admin')
+							<li class="nav-item active">
+								<a href="{{ route('admin.dashboard') }}">
+									<i class="fas fa-home"></i>
+									<p>Dashboard</p>
+									<span class="badge badge-count">5</span>
+								</a>
+							</li>
+						@elseif (Auth::user()->role == 'user')
+							<li class="nav-item active">
+								<a href="{{ route('home') }}">
+									<i class="fas fa-home"></i>
+									<p>Dashboard</p>
+									<span class="badge badge-count">5</span>
+								</a>
+							</li>
+						@endif
+					
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
 							<h4 class="text-section">Components</h4>
 						</li>
-                        <li class="nav-item">
+					
+						@if(Auth::user()->role == 'admin' || in_array(2, $userMenus))
+						<li class="nav-item">
 							<a href="{{ route('pasien.index') }}">
 								<i class="fas fa-users"></i>
-								<p>Pasien</p>
+								<p>Data Pasien</p>
 							</a>
 						</li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.dashboard') }}">
-                                <i class="fas fa-user-md"></i>
-                                <p>Dokter</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.dashboard') }}">
-                                <i class="fas fa-hospital"></i>
-                                <p>Ruangan Pelayanan</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.dashboard') }}">
-                                <i class="fas fa-file-invoice"></i>
-                                <p>Asuransi</p>
-                            </a>
-                        </li>                        
-						{{-- <li class="nav-item">
-							<a data-toggle="collapse" href="#base">
-								<i class="fas fa-layer-group"></i>
-								<p>Base</p>
-								<span class="caret"></span>
+						@endif
+					
+						@if(Auth::user()->role == 'admin' || in_array(3, $userMenus))
+						<li class="nav-item">
+							<a href="{{ route('dokter.index') }}">
+								<i class="fas fa-user-md"></i>
+								<p>Data Dokter</p>
 							</a>
-							<div class="collapse" id="base">
-								<ul class="nav nav-collapse">
-									<li>
-										<a href="components/avatars.html">
-											<span class="sub-item">Avatars</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/buttons.html">
-											<span class="sub-item">Buttons</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/gridsystem.html">
-											<span class="sub-item">Grid System</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/panels.html">
-											<span class="sub-item">Panels</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/notifications.html">
-											<span class="sub-item">Notifications</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/sweetalert.html">
-											<span class="sub-item">Sweet Alert</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/font-awesome-icons.html">
-											<span class="sub-item">Font Awesome Icons</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/flaticons.html">
-											<span class="sub-item">Flaticons</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/typography.html">
-											<span class="sub-item">Typography</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</li> --}}
+						</li>
+						@endif
+
+						@if(Auth::user()->role == 'admin' || in_array(3, $userMenus))
+						<li class="nav-item">
+							<a href="{{ route('pegawai.index') }}">
+								<i class="fas fa-user-md"></i>
+								<p>Data Pegawai</p>
+							</a>
+						</li>
+						@endif
+					
+						@if(Auth::user()->role == 'admin' || in_array(4, $userMenus))
+						<li class="nav-item">
+							<a href="{{ route('ruangpelayanans.index') }}">
+								<i class="fas fa-hospital"></i>
+								<p>Ruangan Pelayanan</p>
+							</a>
+						</li>
+						@endif
+					
+						@if(Auth::user()->role == 'admin' || in_array(5, $userMenus))
+						<li class="nav-item">
+							<a href="{{ route('asuransis.index') }}">
+								<i class="fas fa-file-invoice"></i>
+								<p>Asuransi</p>
+							</a>
+						</li>
+						@endif
+
+						@if(Auth::user()->role == 'admin' || in_array(5, $userMenus))
+						<li class="nav-item">
+							<a href="{{ route('asuransis.index') }}">
+								<i class="fas fa-file-invoice"></i>
+								<p>Keluhan</p>
+							</a>
+						</li>
+						@endif
+					
+						@if(Auth::user()->role == 'admin' || in_array(6, $userMenus))
+						<li class="nav-item">
+							<a href="{{ route('menus.index') }}">
+								<i class="fas fa-file-invoice"></i>
+								<p>Menu</p>
+							</a>
+						</li>
+						@endif
 					</ul>
+					
+					{{-- <li class="nav-item">
+						<a href="{{ route('user.give-access') }}">
+							<i class="fas fa-file-invoice"></i>
+							<p>Menu Access</p>
+						</a>
+					</li>                         --}}
+					{{-- <li class="nav-item">
+						<a data-toggle="collapse" href="#base">
+							<i class="fas fa-layer-group"></i>
+							<p>Base</p>
+							<span class="caret"></span>
+						</a>
+						<div class="collapse" id="base">
+							<ul class="nav nav-collapse">
+								<li>
+									<a href="components/avatars.html">
+										<span class="sub-item">Avatars</span>
+									</a>
+								</li>
+								<li>
+									<a href="components/buttons.html">
+										<span class="sub-item">Buttons</span>
+									</a>
+								</li>
+								<li>
+									<a href="components/gridsystem.html">
+										<span class="sub-item">Grid System</span>
+									</a>
+								</li>
+								<li>
+									<a href="components/panels.html">
+										<span class="sub-item">Panels</span>
+									</a>
+								</li>
+								<li>
+									<a href="components/notifications.html">
+										<span class="sub-item">Notifications</span>
+									</a>
+								</li>
+								<li>
+									<a href="components/sweetalert.html">
+										<span class="sub-item">Sweet Alert</span>
+									</a>
+								</li>
+								<li>
+									<a href="components/font-awesome-icons.html">
+										<span class="sub-item">Font Awesome Icons</span>
+									</a>
+								</li>
+								<li>
+									<a href="components/flaticons.html">
+										<span class="sub-item">Flaticons</span>
+									</a>
+								</li>
+								<li>
+									<a href="components/typography.html">
+										<span class="sub-item">Typography</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li> --}}
 				</div>
 			</div>
 		</div>

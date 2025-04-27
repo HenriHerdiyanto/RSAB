@@ -2,27 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class PasienController extends Controller
+class PegawaiController extends Controller
 {
     public function index()
     {
-        $pasien = User::where('role', 'user')->get();
-        return view('pasien.index', compact('pasien'));
-    }
-
-    // public function create()
-    // {
-    //     return view('pasien.create');
-    // }
-
-    public function edit($id)
-    {
-        $pasien = User::findOrFail($id);
-        return view('pasien.edit', compact('pasien'));
+        $pegawais = User::where("status_user", "=", "pegawai")->get();
+        return view('pegawai.index', compact('pegawais'));
     }
 
     public function store(Request $request)
@@ -51,7 +41,13 @@ class PasienController extends Controller
             'status_user' => $validated['status_user'],
         ]);
 
-        return redirect()->route('pasien.index')->with('success', 'Pasien berhasil ditambahkan.');
+        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $pegawai = User::findOrFail($id);
+        return view('pegawai.edit', compact('pegawai'));
     }
 
     public function update(Request $request, $id)
@@ -60,7 +56,7 @@ class PasienController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:8|confirmed', // Password hanya valid jika diubah
+            'password' => 'nullable|string|min:8', // Password hanya valid jika diubah
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:L,P',
             'alamat' => 'required|string',
@@ -86,14 +82,13 @@ class PasienController extends Controller
         if ($user->save()) {
             // Jika berhasil disimpan
             session()->flash('success', 'Data berhasil diperbarui!');
-            return redirect()->route('pasien.index');
+            return redirect()->route('pegawai.index');
         } else {
             // Jika gagal disimpan
             session()->flash('error', 'Terjadi kesalahan saat memperbarui data.');
-            return redirect()->route('pasien.edit', $user->id);
+            return redirect()->route('pegawai.edit', $user->id);
         }
     }
-
     public function destroy($id)
     {
         $user = User::findOrFail($id);
@@ -104,6 +99,6 @@ class PasienController extends Controller
             // Jika gagal dihapus
             session()->flash('error', 'Terjadi kesalahan saat menghapus data.');
         }
-        return redirect()->route('pasien.index');
+        return redirect()->route('pegawai.index');
     }
 }

@@ -6,23 +6,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class PasienController extends Controller
+class DokterController extends Controller
 {
     public function index()
     {
-        $pasien = User::where('role', 'user')->get();
-        return view('pasien.index', compact('pasien'));
-    }
-
-    // public function create()
-    // {
-    //     return view('pasien.create');
-    // }
-
-    public function edit($id)
-    {
-        $pasien = User::findOrFail($id);
-        return view('pasien.edit', compact('pasien'));
+        $dokter = User::where('status_user', '=', 'dokter')->get();
+        return view('dokter.index', compact('dokter'));
     }
 
     public function store(Request $request)
@@ -51,7 +40,13 @@ class PasienController extends Controller
             'status_user' => $validated['status_user'],
         ]);
 
-        return redirect()->route('pasien.index')->with('success', 'Pasien berhasil ditambahkan.');
+        return redirect()->route('dokter.index')->with('success', 'Dokter berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $dokter = User::findOrFail($id);
+        return view('dokter.edit', compact('dokter'));
     }
 
     public function update(Request $request, $id)
@@ -86,11 +81,11 @@ class PasienController extends Controller
         if ($user->save()) {
             // Jika berhasil disimpan
             session()->flash('success', 'Data berhasil diperbarui!');
-            return redirect()->route('pasien.index');
+            return redirect()->route('dokter.index');
         } else {
             // Jika gagal disimpan
             session()->flash('error', 'Terjadi kesalahan saat memperbarui data.');
-            return redirect()->route('pasien.edit', $user->id);
+            return redirect()->route('dokter.edit', $user->id);
         }
     }
 
@@ -104,6 +99,6 @@ class PasienController extends Controller
             // Jika gagal dihapus
             session()->flash('error', 'Terjadi kesalahan saat menghapus data.');
         }
-        return redirect()->route('pasien.index');
+        return redirect()->route('dokter.index');
     }
 }

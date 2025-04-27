@@ -24,9 +24,11 @@ class LoginController extends Controller
         $user = Auth::user();
 
         if ($user->role == 'admin') {
-            return '/admin'; // Kalau admin ke /admin
-        }
-
-        return '/home'; // Selain itu ke /home
+            return route('admin.dashboard');
+        } elseif ($user->role == 'user') {
+            return route('home');
+        } else {
+            return route('login');
+        } // Selain itu ke /home
     }
 }
