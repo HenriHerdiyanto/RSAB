@@ -26,19 +26,18 @@ class TransaksiController extends Controller
 
     public function index()
     {
-        // Mengambil semua transaksi dan memuat relasi 'registrasi' dan 'user' secara eager load
-        // $transaksis = Transaksi::with(['registrasi.user', 'tindakan', 'pegawai'])->get();
-        $transaksis = Transaksi::all();
+        $transaksis = Transaksi::with([
+            'registrasi', // relasi ke tabel registrasi
+            'tindakan',   // relasi ke tabel tindakan
+            'pegawai'     // relasi ke tabel users (pegawai)
+        ])->get();
 
-        // Mengambil data registrasi untuk dropdown
         $registrasi = Registrasi::with('user')->get();
+        $tindakans = Tindakan::all();
 
-        // Mengambil semua tindakan untuk dropdown
-        $tindakans = Tindakan::all();  // Menambahkan pengambilan data Tindakan
-
-        // Mengirimkan variabel ke view
         return view('transaksi.index', compact('transaksis', 'registrasi', 'tindakans'));
     }
+
 
 
     // public function create()

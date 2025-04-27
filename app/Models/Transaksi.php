@@ -15,25 +15,37 @@ class Transaksi extends Model
         'id_pegawai',
     ];
 
-
-    // ===========
-    // Relasi ke model Registrasi
-    // app/Models/Transaksi.php
     public function registrasi()
     {
         return $this->belongsTo(Registrasi::class, 'id_registrasi');
     }
 
-
-    // Relasi ke model Tindakan
     public function tindakan()
     {
-        return $this->belongsTo(Tindakan::class);
+        return $this->belongsTo(Tindakan::class, 'id_tindakan');
     }
 
-    // Relasi ke model User untuk Pegawai
     public function pegawai()
     {
         return $this->belongsTo(User::class, 'id_pegawai');
     }
+    // ===========
+    // Relasi ke model Registrasi
+    // app/Models/Transaksi.php
+    // public function registrasi()
+    // {
+    //     return $this->belongsTo(Registrasi::class, 'id_registrasi');
+    // }
+
+    // // Relasi ke model Tindakan
+    // public function tindakan()
+    // {
+    //     return $this->belongsTo(Tindakan::class);
+    // }
+
+    // // Relasi ke model User untuk Pegawai
+    // public function pegawai()
+    // {
+    //     return $this->belongsTo(User::class, 'id_pegawai');
+    // }
 }

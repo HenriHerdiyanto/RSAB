@@ -163,6 +163,7 @@
                         <thead>
                             <tr>
                                 <th>Nama Pasien</th>
+                                <th>Tanggal Periksa</th>
                                 <th>Tindakan Diambil</th>
                                 <th>Pegawai</th>
                                 <th style="width: 10%">Action</th>
@@ -171,6 +172,7 @@
                         <tfoot>
                             <tr>
                                 <th>Nama Pasien</th>
+                                <th>Tanggal Periksa</th>
                                 <th>Tindakan Diambil</th>
                                 <th>Pegawai</th>
                             </tr>
@@ -179,24 +181,25 @@
                             {{-- {{ dd($registrasis) }} --}}
                             @foreach ($transaksis as $transaksi)
                                 <tr>
-                                    <td>{{ $transaksi->id_registrasi }}</td>
-                                    <td>{{ $transaksi->id_tindakan }}</td>
-                                    <td>{{ $transaksi->id_pegawai }}</td>
+                                    <td>{{ $transaksi->registrasi?->user?->name ?? '-' }}</td>
+                                    <td>{{ $transaksi->registrasi?->tanggal_registrasi ?? '-' }}</td>
+                                    <td>{{ $transaksi->tindakan?->nama_tindakan ?? '-' }}</td>
+                                    <td>{{ $transaksi->pegawai?->name ?? '-' }}</td>
                                     <td>
                                         <div class="form-button-action">
-                                            <a href="{{ route('transaksi.edit', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                            {{-- <a href="{{ route('transaksi.edit', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                                 <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="{{ route('users.access', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Transaksi">
+                                            </a> --}}
+                                            <a href="{{ route('users.access', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Cetak transaksi">
                                                 <i class="fas fa-clipboard-list"></i>
                                             </a>
-                                            <form action="{{ route('pasien.destroy', $item->id) }}" method="POST">
+                                            {{-- <form action="{{ route('pasien.destroy', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE') <!-- Gunakan DELETE, bukan POST -->
                                                 <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
                                                     <i class="fa fa-times"></i>
                                                 </button>
-                                            </form>                                            
+                                            </form>--}}
                                         </div>
                                     </td>
                                 </tr>
