@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('transaksi', TransaksiController::class);
 
 
+    Route::get('/transaksi/{id}/invoice', [TransaksiController::class, 'invoice'])->name('transaksi.invoice');
 
 
     // Access Menu

@@ -190,9 +190,14 @@
                                             {{-- <a href="{{ route('transaksi.edit', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                                 <i class="fa fa-edit"></i>
                                             </a> --}}
-                                            <a href="{{ route('users.access', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Cetak transaksi">
+                                            <a href="{{ route('transaksi.invoice', $transaksi->id) }}" 
+                                                data-toggle="tooltip" 
+                                                title="Cetak transaksi" 
+                                                class="btn btn-link btn-warning btn-lg" 
+                                                data-original-title="Cetak transaksi"> 
                                                 <i class="fas fa-clipboard-list"></i>
                                             </a>
+                                            
                                             {{-- <form action="{{ route('pasien.destroy', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE') <!-- Gunakan DELETE, bukan POST -->

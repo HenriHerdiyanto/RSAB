@@ -24,19 +24,48 @@ class TransaksiController extends Controller
     //     return view('transaksi.index', compact('transaksis', 'registrasi', 'tindakans'));
     // }
 
+    // public function index()
+    // {
+    //     $transaksis = Transaksi::with([
+    //         'registrasi', // relasi ke tabel registrasi
+    //         'tindakan',   // relasi ke tabel tindakan
+    //         'pegawai'     // relasi ke tabel users (pegawai)
+    //     ])->get();
+
+    //     $tindakans = Tindakan::all();
+    //     $registrasi = Registrasi::with('user')->get();
+
+    //     return view('transaksi.index', compact('transaksis', 'registrasi', 'tindakans'));
+    // }
     public function index()
     {
         $transaksis = Transaksi::with([
-            'registrasi', // relasi ke tabel registrasi
-            'tindakan',   // relasi ke tabel tindakan
-            'pegawai'     // relasi ke tabel users (pegawai)
+            'registrasi.pasien',
+            'registrasi.dokter',
+            'registrasi.ruangan',
+            'tindakan',
+            'pegawai'
         ])->get();
-
-        $registrasi = Registrasi::with('user')->get();
         $tindakans = Tindakan::all();
+        $registrasi = Registrasi::with('user')->get();
 
         return view('transaksi.index', compact('transaksis', 'registrasi', 'tindakans'));
     }
+
+    public function invoice($id)
+    {
+        $transaksi = Transaksi::with([
+            'registrasi.pasien',
+            'registrasi.dokter',
+            'registrasi.ruangan',
+            'tindakan',
+            'pegawai'
+        ])->findOrFail($id);
+
+        return view('transaksi.invoice', compact('transaksi'));
+    }
+
+
 
 
 
