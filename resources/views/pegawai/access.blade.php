@@ -18,7 +18,7 @@
                                 value="{{ $menu->id }}"
                                 id="menu_{{ $menu->id }}"
                                 {{ in_array($menu->id, $userMenuIds) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="menu_{{ $menu->id }}"> {{ $menu->name }}</label>
+                            <label class="form-check-label" for="menu_{{ $menu->id }}"> {{ $menu->name }} {{ $menu->id }}</label>
                         </li>
                     @endforeach
                 </ul>

@@ -38,9 +38,11 @@ class UserController extends Controller
     public function accessMenuPegawai(User $user)
     {
         $menus = Menu::all();
+        // dd($menus);
         $userMenuIds = $user->menus()->pluck('menus.id')->toArray(); // ambil menu yang sudah dimiliki user
         return view('pegawai.access', compact('user', 'menus', 'userMenuIds'));
     }
+
     public function updateAccessMenuPegawai(Request $request, User $user)
     {
         $user->menus()->sync($request->menu_ids); // Update relasi menu

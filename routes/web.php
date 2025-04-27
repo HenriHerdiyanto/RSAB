@@ -6,7 +6,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\RuangPelayananController;
+use App\Http\Controllers\TindakanController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Auth;
@@ -37,12 +40,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('ruangpelayanans', RuangPelayananController::class);
     Route::resource('asuransis', AsuransiController::class);
     Route::resource('pegawai', PegawaiController::class);
+    Route::resource('registrasi', RegistrasiController::class);
+    Route::resource('tindakan', TindakanController::class);
+    Route::resource('transaksi', TransaksiController::class);
 
 
 
 
     // Access Menu
     Route::post('user/{user}/give-access', [MenuController::class, 'giveAccess'])->name('user.give-access');
+    // Route::get('user/{user}/give-access', [MenuController::class, 'showGiveAccessForm'])->name('user.give-access.form');
+
     Route::get('users/{user}/access', [UserController::class, 'accessMenu'])->name('users.access');
     Route::post('users/{user}/access', [UserController::class, 'updateAccessMenu'])->name('users.updateAccess');
     // dokter access

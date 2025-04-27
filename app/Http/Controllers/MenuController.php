@@ -76,4 +76,13 @@ class MenuController extends Controller
 
         return redirect()->back()->with('success', 'Akses menu berhasil diperbarui.');
     }
+
+    // public function showGiveAccessForm($userId)
+    // {
+    //     $user = User::findOrFail($userId);
+    //     $menus = Menu::all();
+    //     $userMenuIds = UserMenu::where('user_id', $userId)->pluck('menu_id')->toArray();
+
+    //     return view('menus.give_access', compact('user', 'menus', 'userMenuIds'));
+    // }
 }

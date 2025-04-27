@@ -207,8 +207,24 @@
 							</div>
 						</div>
 					</div>
+					@php
+						use Illuminate\Support\Facades\DB;
+
+						// Ambil semua id menu yang diperlukan berdasarkan route_name
+						$menuIds = [
+							'pasien' => DB::table('menus')->where('route_name', 'pasien.index')->value('id'),
+							'dokter' => DB::table('menus')->where('route_name', 'dokter.index')->value('id'),
+							'pegawai' => DB::table('menus')->where('route_name', 'pegawai.index')->value('id'),
+							'tindakan' => DB::table('menus')->where('route_name', 'tindakan.index')->value('id'),
+							'ruangan' => DB::table('menus')->where('route_name', 'ruangpelayanans.index')->value('id'),
+							'asuransi' => DB::table('menus')->where('route_name', 'asuransis.index')->value('id'),
+							'registrasi' => DB::table('menus')->where('route_name', 'registrasi.index')->value('id'),
+							'menu' => DB::table('menus')->where('route_name', 'menus.index')->value('id'),
+						];
+					@endphp
+
 					<ul class="nav">
-						{{-- Cek apakah user yang login adalah admin --}}
+						{{-- Dashboard --}}
 						@if (Auth::user()->role == 'admin')
 							<li class="nav-item active">
 								<a href="{{ route('admin.dashboard') }}">
@@ -226,77 +242,106 @@
 								</a>
 							</li>
 						@endif
-					
+
+						{{-- Section --}}
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
 							<h4 class="text-section">Components</h4>
 						</li>
-					
-						@if(Auth::user()->role == 'admin' || in_array(2, $userMenus))
-						<li class="nav-item">
-							<a href="{{ route('pasien.index') }}">
-								<i class="fas fa-users"></i>
-								<p>Data Pasien</p>
-							</a>
-						</li>
-						@endif
-					
-						@if(Auth::user()->role == 'admin' || in_array(3, $userMenus))
-						<li class="nav-item">
-							<a href="{{ route('dokter.index') }}">
-								<i class="fas fa-user-md"></i>
-								<p>Data Dokter</p>
-							</a>
-						</li>
+
+						{{-- Menu Data Pasien --}}
+						@if (Auth::user()->role == 'admin' || in_array($menuIds['pasien'], $userMenus))
+							<li class="nav-item">
+								<a href="{{ route('pasien.index') }}">
+									<i class="fas fa-users"></i>
+									<p>Data Pasien</p>
+								</a>
+							</li>
 						@endif
 
-						@if(Auth::user()->role == 'admin' || in_array(3, $userMenus))
-						<li class="nav-item">
-							<a href="{{ route('pegawai.index') }}">
-								<i class="fas fa-user-md"></i>
-								<p>Data Pegawai</p>
-							</a>
-						</li>
-						@endif
-					
-						@if(Auth::user()->role == 'admin' || in_array(4, $userMenus))
-						<li class="nav-item">
-							<a href="{{ route('ruangpelayanans.index') }}">
-								<i class="fas fa-hospital"></i>
-								<p>Ruangan Pelayanan</p>
-							</a>
-						</li>
-						@endif
-					
-						@if(Auth::user()->role == 'admin' || in_array(5, $userMenus))
-						<li class="nav-item">
-							<a href="{{ route('asuransis.index') }}">
-								<i class="fas fa-file-invoice"></i>
-								<p>Asuransi</p>
-							</a>
-						</li>
+						{{-- Menu Data Dokter --}}
+						@if (Auth::user()->role == 'admin' || in_array($menuIds['dokter'], $userMenus))
+							<li class="nav-item">
+								<a href="{{ route('dokter.index') }}">
+									<i class="fas fa-user-md"></i>
+									<p>Data Dokter</p>
+								</a>
+							</li>
 						@endif
 
-						@if(Auth::user()->role == 'admin' || in_array(5, $userMenus))
-						<li class="nav-item">
-							<a href="{{ route('asuransis.index') }}">
-								<i class="fas fa-file-invoice"></i>
-								<p>Keluhan</p>
-							</a>
-						</li>
+						{{-- Menu Data Pegawai --}}
+						@if (Auth::user()->role == 'admin' || in_array($menuIds['pegawai'], $userMenus))
+							<li class="nav-item">
+								<a href="{{ route('pegawai.index') }}">
+									<i class="fas fa-id-card"></i>
+									<p>Data Pegawai</p>
+								</a>
+							</li>
 						@endif
-					
-						@if(Auth::user()->role == 'admin' || in_array(6, $userMenus))
-						<li class="nav-item">
-							<a href="{{ route('menus.index') }}">
-								<i class="fas fa-file-invoice"></i>
-								<p>Menu</p>
-							</a>
-						</li>
+
+						{{-- Menu Tindakan --}}
+						@if (Auth::user()->role == 'admin' || in_array($menuIds['tindakan'], $userMenus))
+							<li class="nav-item">
+								<a href="{{ route('tindakan.index') }}">
+									<i class="fas fa-stethoscope"></i>
+									<p>Tindakan</p>
+								</a>
+							</li>
+						@endif
+
+						{{-- Menu Ruangan Pelayanan --}}
+						@if (Auth::user()->role == 'admin' || in_array($menuIds['ruangan'], $userMenus))
+							<li class="nav-item">
+								<a href="{{ route('ruangpelayanans.index') }}">
+									<i class="fas fa-hospital"></i>
+									<p>Ruangan Pelayanan</p>
+								</a>
+							</li>
+						@endif
+
+						{{-- Menu Asuransi --}}
+						@if (Auth::user()->role == 'admin' || in_array($menuIds['asuransi'], $userMenus))
+							<li class="nav-item">
+								<a href="{{ route('asuransis.index') }}">
+									<i class="fas fa-shield-alt"></i>
+									<p>Asuransi</p>
+								</a>
+							</li>
+						@endif
+
+						{{-- Menu Registrasi --}}
+						@if (Auth::user()->role == 'admin' || in_array($menuIds['registrasi'], $userMenus))
+							<li class="nav-item">
+								<a href="{{ route('registrasi.index') }}">
+									<i class="fas fa-file-invoice"></i>
+									<p>Registrasi</p>
+								</a>
+							</li>
+						@endif
+
+						{{-- Menu Transaksi --}}
+						@if (Auth::user()->role == 'admin' || in_array($menuIds['transaksi'], $userMenus))
+							<li class="nav-item">
+								<a href="{{ route('transaksi.index') }}">
+									<i class="fas fa-file-invoice"></i>
+									<p>Transaksi</p>
+								</a>
+							</li>
+						@endif
+
+						{{-- Menu Master Menu --}}
+						@if (Auth::user()->role == 'admin' || in_array($menuIds['menu'], $userMenus))
+							<li class="nav-item">
+								<a href="{{ route('menus.index') }}">
+									<i class="fas fa-th-list"></i>
+									<p>Menu</p>
+								</a>
+							</li>
 						@endif
 					</ul>
+
 					
 					{{-- <li class="nav-item">
 						<a href="{{ route('user.give-access') }}">

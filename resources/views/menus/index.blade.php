@@ -86,7 +86,7 @@
                                         <td>{{ $item->route_name }}</td>
                                         <td>
                                             <div class="form-button-action">
-                                                <a href="{{ route('user.give-access', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                <a href="{{ route('menus.edit', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <form action="{{ route('menus.destroy', $item->id) }}" method="POST">
